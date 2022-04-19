@@ -1,0 +1,8 @@
+create table student
+(student_id number primary key,
+student_name varchar(30),
+address varchar(40),
+city varchar(30),
+department_id number,
+constraint fk_dept_num foreign key (department_id) references department(department_id)
+);

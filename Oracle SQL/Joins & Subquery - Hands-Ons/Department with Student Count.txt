@@ -1,0 +1,6 @@
+SELECT d.Department_name,
+    COUNT(*) AS STUDENT_COUNT
+FROM Department d
+JOIN Student s
+  ON d.department_id = s.department_id
+  group by d.Department_name order by Department_name;

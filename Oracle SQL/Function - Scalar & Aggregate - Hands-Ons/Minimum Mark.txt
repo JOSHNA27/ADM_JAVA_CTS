@@ -1,0 +1,5 @@
+Select student_id,
+  Min(value) as minimum_mark
+From mark
+Group by student_id
+Order by minimum_mark;

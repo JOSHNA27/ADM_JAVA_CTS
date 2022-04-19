@@ -1,0 +1,1 @@
+select subject_name, subject_code, staff_name from Subject s, Staff st where s.staff_id=st.staff_id order by subject_code;

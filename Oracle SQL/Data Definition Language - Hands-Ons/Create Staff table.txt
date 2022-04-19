@@ -1,0 +1,7 @@
+create table staff
+(
+staff_id number primary key,
+staff_name varchar(30),
+department_id number(3),
+constraint fk_staff_dept_id foreign key (department_id) references department(department_id)
+);

@@ -1,0 +1,7 @@
+Select s.subject_name,
+Min(value) as min_mark
+From mark m
+join Subject s  
+on s.subject_id= m.subject_id
+group by s.subject_name
+order by s.subject_name desc;

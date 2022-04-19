@@ -1,0 +1,8 @@
+Select st.staff_name, s.subject_name, max(m.value) as max_mark
+  From staff st
+  join subject s
+    On st.staff_id = s.staff_id
+  Join mark m
+    on m.subject_id = s.subject_id
+ Group by st.staff_name, s.subject_name, st.staff_id
+ order by max_mark desc;

@@ -1,0 +1,5 @@
+insert into student(StudId,FirstName,LastName,Street,City,DOB) values(3001,'Dileep','Kumar','JaiNagar','Bangalore','10-MAR-1999');
+insert into student(StudId,FirstName,LastName,Street,City,DOB) values(3002,'Anand','Kumar','Indiranagar','Bangalore','19-JAN-1998');
+insert into student(StudId,FirstName,LastName,Street,City,DOB) values(3003,'Bala','Krishnan','Annanagar','Chennai','03-JAN-1996');
+insert into student(StudId,FirstName,LastName,Street,City,DOB) values(3004,'Gowri','Shankar','Gandhipuram','Coimbatore','22-DEC-1997');
+insert into student(StudId,FirstName,LastName,Street,City,DOB) values(3005,'Priya','Menon','JPNagar','Cochin','12-FEB-1994');
