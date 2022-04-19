@@ -1,0 +1,37 @@
+#include <iostream>
+#include<string>
+using namespace std;
+int *pt;
+int stringLength(char* pt){
+     int length =0;
+     
+  
+        
+       
+        
+    while(*pt !='\0'){
+        length++;
+        pt++;
+    }
+    return length;
+}
+
+   
+
+
+int main(){   //DO NOT change the 'main' signature
+
+    //Fill code here
+    char str[20] ;
+     
+  
+        cin.getline(str,20);
+        
+     
+    
+    
+    cout<<stringLength(str);
+   
+    return 0;
+    
+}
