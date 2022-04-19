@@ -1,0 +1,166 @@
+(a). database.properties
+
+#IF NEEDED, YOU CAN MODIFY THIS PROPERTY FILE
+#ENSURE YOU ARE NOT CHANGING THE NAME OF THE PROPERTY
+#YOU CAN CHANGE THE VALUE OF THE PROPERTY 
+#LOAD THE DETAILS OF DRIVER CLASS, URL, USERNAME AND PASSWORD IN DB.java using this properties file only. 
+#Do not hard code the values in DB.java.
+
+DB_DRIVER_CLASS=com.mysql.jdbc.Driver
+DB_URL=jdbc:mysql://localhost:3306/pss
+DB_USERNAME=root
+DB_PASSWORD=
+
+(b). DB.java
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.Properties;
+
+public class DB {
+
+	private static Connection con = null;
+	private static Properties props = new Properties();
+	
+
+    //ENSURE YOU DON'T CHANGE THE BELOW CODE WHEN YOU SUBMIT
+	public static Connection getConnection() throws ClassNotFoundException, SQLException {
+	    try{
+			
+			FileInputStream fis = null;
+			fis = new FileInputStream("database.properties");
+			props.load(fis);
+			
+			// load the Driver Class
+			Class.forName(props.getProperty("DB_DRIVER_CLASS"));
+
+			// create the connection now
+            con = DriverManager.getConnection(props.getProperty("DB_URL"),props.getProperty("DB_USERNAME"),props.getProperty("DB_PASSWORD"));
+	    }
+	    catch(IOException e){
+	        e.printStackTrace();
+	    }
+		return con;	
+	}
+}
+
+(c). Main.java
+
+import java.util.*;
+
+public class Main {
+ public static void main(String[] args) {
+
+  // fill your code here
+
+  Scanner s = new Scanner(System.in);
+
+  System.out.println("Enter the minimum height");
+  double minHeight = s.nextDouble();
+
+  System.out.println("Enter the maximum weight");
+  double maxWeight = s.nextDouble();
+  s.close();
+
+  PlayerSelectionSystem pss = new PlayerSelectionSystem();
+
+  List<String> playerList = pss.playersBasedOnHeightWeight(minHeight, maxWeight);
+
+  if (playerList.isEmpty()) {
+   System.out.printf("No players are with minimum height of %.1f and maximum weight of %.1f", minHeight,
+     maxWeight);
+   return;
+  }
+
+  for (String player : playerList) {
+   System.out.println(player);
+  }
+ }
+}
+
+(d). PlayerSelectionSystem.java
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+public class PlayerSelectionSystem {
+
+ public List<String> playersBasedOnHeightWeight(double minHeight, double maxWeight) {
+
+  // Fill your code here
+
+  List<String> playerList = new ArrayList<String>();
+
+  try {
+   Connection con = DB.getConnection();
+
+   String query = "SELECT * FROM player WHERE height >= " + minHeight + " AND weight <= " + maxWeight
+     + " ORDER BY playerName";
+
+   Statement st = con.createStatement();
+   ResultSet rs = st.executeQuery(query);
+
+   while (rs.next()) {
+    playerList.add(rs.getString("playerName"));
+   }
+            
+            st.close();
+   con.close();
+
+  } catch (ClassNotFoundException | SQLException e) {
+   e.printStackTrace();
+  }
+
+  return playerList;
+ }
+}
+
+(e). Player.java
+
+public class Player {
+
+ private int playerId;
+ private String playerName;
+ private double height;
+ private double weight;
+ public int getPlayerId() {
+  return playerId;
+ }
+ public void setPlayerId(int playerId) {
+  this.playerId = playerId;
+ }
+ public String getPlayerName() {
+  return playerName;
+ }
+ public void setPlayerName(String playerName) {
+  this.playerName = playerName;
+ }
+ public double getHeight() {
+  return height;
+ }
+ public void setHeight(double height) {
+  this.height = height;
+ }
+ public double getWeight() {
+  return weight;
+ }
+ public void setWeight(double weight) {
+  this.weight = weight;
+ }
+ public Player(int playerId, String playerName, double height, double weight) {
+  super();
+  this.playerId = playerId;
+  this.playerName = playerName;
+  this.height = height;
+  this.weight = weight;
+ }
+ 
+ 
+}
