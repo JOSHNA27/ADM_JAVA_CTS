@@ -1,0 +1,238 @@
+(a).RainbowJewellers.java
+
+package com.cts.rainbowjewellers;
+
+import java.util.Scanner;
+
+import com.cts.rainbowjewellers.service.RainbowJewellersService;
+import com.cts.skeletonvalidator.SkeletonValidator;
+
+
+public class RainbowJewellers {
+
+	public static void main(String[] args) {
+		// CODE SKELETON - VALIDATION STARTS
+		// DO NOT CHANGE THIS CODE
+		SkeletonValidator validator = new SkeletonValidator();
+		// CODE SKELETON - VALIDATION ENDS
+
+		Scanner scanner = new Scanner(System.in);
+		
+		System.out.println("Enter the gold in grams");
+		double grams = Double.parseDouble(scanner.nextLine());
+		
+		RainbowJewellersService rainbowJewellersService = new RainbowJewellersService();
+		
+		double totalPriceOfGold = rainbowJewellersService.calculategoldprice(grams);
+		
+		System.out.println("Total Price of the Gold is: " + totalPriceOfGold);
+	}
+
+}
+
+(b).RainbowJewellersParameterizedTest.java 
+
+package com.cts.rainbowjewellers.test;
+
+import com.cts.rainbowjewellers.service.RainbowJewellersService;
+
+import java.util.Arrays;
+import java.util.Collection;
+
+import static org.junit.Assert.assertEquals;
+
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
+import org.junit.Test;
+
+@RunWith(Parameterized.class) // For carrying out parameterized junit test
+public class RainbowJewellersParameterizedTest {
+    
+    RainbowJewellersService service = new RainbowJewellersService();
+    
+    // Input value (argument) of calculategoldprice() which returns the 'actual' value
+    private double gram; 
+    private double expectedGoldPrice; // 'expected' value
+    
+    // Constructor which accepts the parameters passed from dataProvider() as arguments
+    public RainbowJewellersParameterizedTest(double gram, double expectedGoldPrice){
+        this.gram = gram;
+        this.expectedGoldPrice = expectedGoldPrice;
+    }
+    
+    @Parameters 
+    public static Collection dataProvider() {
+        return Arrays.asList(new Object[][] {
+            {9.6, 48401.76},
+            {56, 282343.6},
+            {24.5, 123525.325},
+            {0, 0},
+            {-1, -5041.85}
+        });
+    }
+
+    @Test
+	public void testCalculateGoldPrice() {
+	     //fill code here
+	     assertEquals(expectedGoldPrice, service.calculategoldprice(gram), 0.0001);
+	}
+
+}
+
+(c).RainbowJewellersService.java 
+
+package com.cts.rainbowjewellers.service;
+
+public class RainbowJewellersService {
+    
+	private final double ratepergram = 4450.00;
+	private double makingcharges;
+	private double gst;
+	private double totalprice;
+
+	public double calculategoldprice(double gram) {
+		double totalpriceofgold = 0.0d;
+		totalprice = gram * ratepergram;
+		makingcharges = (totalprice * 10) / 100;
+		gst = (totalprice + makingcharges) * 3 / 100;
+		totalpriceofgold = totalprice + makingcharges + gst;
+		return totalpriceofgold;
+	}
+
+	public static void main(String args[]){
+		System.out.println(new RainbowJewellersService().calculategoldprice(20));
+	}
+}
+
+(d).SkeletonValidator.java 
+
+package com.cts.skeletonvalidator;
+
+import java.lang.reflect.Method;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+public class SkeletonValidator {
+
+	public SkeletonValidator() {
+
+		validateClassName("com.cts.rainbowjewellers.RainbowJewellers");
+		validateClassName("com.cts.rainbowjewellers.service.RainbowJewellersService");
+		validateMethodSignature("main:void", "com.cts.rainbowjewellers.RainbowJewellers");
+		validateMethodSignature("calculategoldprice:double","com.cts.rainbowjewellers.service.RainbowJewellersService");
+
+	}
+
+	private static final Logger LOG = Logger.getLogger("SkeletonValidator");
+
+	protected final boolean validateClassName(String className) {
+
+		boolean iscorrect = false;
+		try {
+			Class.forName(className);
+			iscorrect = true;
+			LOG.info("Class Name " + className + " is correct");
+
+		} catch (ClassNotFoundException e) {
+			LOG.log(Level.SEVERE, "You have changed either the " + "class name/package. Use the correct package "
+					+ "and class name as provided in the skeleton");
+
+		} catch (Exception e) {
+			LOG.log(Level.SEVERE,
+					"There is an error in validating the " + "Class Name. Please manually verify that the "
+							+ "Class name is same as skeleton before uploading");
+		}
+		return iscorrect;
+
+	}
+
+	
+
+	protected final void validateMethodSignature(String methodWithExcptn, String className) {
+		Class cls = null;
+		try {
+
+			String[] actualmethods = methodWithExcptn.split(",");
+			boolean errorFlag = false;
+			String[] methodSignature;
+			String methodName = null;
+			String returnType = null;
+
+			for (String singleMethod : actualmethods) {
+				boolean foundMethod = false;
+				methodSignature = singleMethod.split(":");
+
+				methodName = methodSignature[0];
+				returnType = methodSignature[1];
+				cls = Class.forName(className);
+				Method[] methods = cls.getMethods();
+				for (Method findMethod : methods) {
+					if (methodName.equals(findMethod.getName())) {
+						foundMethod = true;
+						if (!(findMethod.getReturnType().getName().getClass().equals(returnType.getClass()))) {
+							errorFlag = true;
+							LOG.log(Level.SEVERE, " You have changed the " + "return type in '" + methodName
+									+ "' method. Please stick to the " + "skeleton provided");
+
+						} else {
+							LOG.info("Method signature of " + methodName + " is valid");
+						}
+
+					}
+				}
+				if (!foundMethod) {
+					errorFlag = true;
+					LOG.log(Level.SEVERE, " Unable to find the given public method " + methodName
+							+ ". Do not change the " + "given public method name. " + "Verify it with the skeleton");
+				}
+
+			}
+			if (!errorFlag) {
+				LOG.info("Method signature is valid");
+			}
+
+		} catch (Exception e) {
+			LOG.log(Level.SEVERE,
+					" There is an error in validating the " + "method structure. Please manually verify that the "
+							+ "Method signature is same as the skeleton before uploading");
+		}
+	}
+
+}
+
+(e).UserInterface.java 
+
+package com.cts.rainbowjewellers.test;
+
+import org.junit.runner.JUnitCore;
+import org.junit.runner.Result;
+import org.junit.runner.notification.Failure;
+
+import com.cts.rainbowjewellers.test.RainbowJewellersParameterizedTest;
+import com.cts.skeletonvalidator.SkeletonValidator;
+
+
+public class UserInterface {
+
+	public static void main(String[] args) {
+		// CODE SKELETON - VALIDATION STARTS
+		// DO NOT CHANGE THIS CODE
+
+		SkeletonValidator validator = new SkeletonValidator();
+
+		// CODE SKELETON - VALIDATION ENDS
+
+		Result result = JUnitCore.runClasses(RainbowJewellersParameterizedTest.class);
+		
+		if (result.getFailureCount() == 0) {
+			System.out.println("There are No Failures...\n Test Passed...");
+		} else {
+			for (Failure failure : result.getFailures()) {
+				System.out.println("The Test execution failed...\n" + failure.getMessage());
+			}
+		}
+		System.out.println("Result " + result.wasSuccessful());
+	}
+
+}

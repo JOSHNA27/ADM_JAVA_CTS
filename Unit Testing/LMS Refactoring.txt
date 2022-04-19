@@ -1,0 +1,244 @@
+(a).Book.java
+
+package library;
+
+public class Book {
+	private final String bookId;
+	private final String bookTitle;
+	private final String authorName;
+	private final String publisherName;
+	
+	public String getBookId() {
+		return bookId;
+	}
+	public String getBookTitle() {
+		return bookTitle;
+	}
+	public String getAuthorName() {
+		return authorName;
+	}
+	public String getPublisherName() {
+		return publisherName;
+	}
+	
+	public Book(String bookId, String bookTitle, String authorName, String publisherName) {
+		super();
+		this.bookId = bookId;
+		this.bookTitle = bookTitle;
+		this.authorName = authorName;
+		this.publisherName = publisherName;
+	}
+	
+
+}
+
+(b).BookDAO.java 
+
+package library;
+
+import java.util.ArrayList;
+
+public class BookDAO {
+
+	ArrayList<Book> l =  new ArrayList<Book>();
+	
+	public void addBook(Book obj){
+		l.add(obj);
+	}
+	
+	public void removeBook(Book obj)
+	{
+		l.remove(obj);
+	}
+	
+	public void viewBookDAO()
+	{
+		for(int i=0;i<l.size();i++)
+		{
+			System.out.println("Book Id:" + l.get(i).getBookId());
+			System.out.println("Book Title:" + l.get(i).getBookTitle());
+			System.out.println("Author Name:" + l.get(i).getAuthorName());
+			System.out.println("Publisher Name:" + l.get(i).getPublisherName());
+			
+		}
+	}
+}
+
+(c).Member.java 
+
+package library;
+
+public class Member {
+	private final String memberId;
+	private final String memberName;
+	private final String memberType;
+	private final int entitlement;
+	private final String address;
+	private final String emailId;
+	
+	
+	public Member(String memberId, String memberName, String memberType, int entitlement, String address,
+			String emailId) {
+		super();
+		this.memberId = memberId;
+		this.memberName = memberName;
+		this.memberType = memberType;
+		this.entitlement = entitlement;
+		this.address = address;
+		this.emailId = emailId;
+	}
+	public String getMemberId() {
+		return memberId;
+	}
+	public String getMemberName() {
+		return memberName;
+	}
+	public String getMemberType() {
+		return memberType;
+	}
+	public int getEntitlement() {
+		return entitlement;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public String getEmailId() {
+		return emailId;
+	}
+	public String toString(){
+		return memberId + " " + memberName;
+	}
+}
+	
+(d).MemberDAO.java
+
+package library;
+
+import java.util.ArrayList;
+
+public class MemberDAO {
+    ArrayList<Member> memberList =  new ArrayList<Member>();
+	
+	public void addMember(Member obj){
+		memberList.add(obj);
+	}
+	
+	public void removeMember(Member obj)
+	{
+		memberList.remove(obj);
+	}
+	
+	public void viewMember()
+	{
+		for(int i=0;i<memberList.size();i++)
+		{
+			System.out.println("Member Id:" + memberList.get(i).getMemberId());
+			System.out.println("Member Title:" + memberList.get(i).getMemberName());
+			System.out.println("Member Type:" + memberList.get(i).getMemberType());
+			System.out.println("Address:" + memberList.get(i).getAddress());
+			System.out.println("Email-id:" + memberList.get(i).getEmailId());
+			System.out.println("Entitlement:" + memberList.get(i).getEntitlement());
+			
+			
+		}
+	}
+
+}
+
+(e).Transaction.java
+
+package library;
+
+import java.util.Date;
+
+public class Transaction {
+	private final Member member;
+	private final Book book;
+	private final int transactionId;
+	private final String transactionType;
+	private static final int NO_OF_BOOKS = 0;	
+	private final Date transactionDate;
+	private final Date bookTobeReturnDate;
+	private final Date bookReturnDate;
+	private final double penalty;
+	
+	public Transaction(Member member, Book book, int transactionId, String transactionType, Date transactionDate, 
+		Date bookTobeReturnDate, Date bookReturnDate, double penalty) {
+		super();
+		this.member = member;
+		this.book = book;
+		this.transactionId = transactionId;
+		this.transactionType = transactionType;
+		this.transactionDate = transactionDate;
+		this.bookTobeReturnDate = bookTobeReturnDate;
+		this.bookReturnDate = bookReturnDate;
+		this.penalty = penalty;
+	}
+	public Member getMember() {
+		return member;
+	}
+	public Book getBook() {
+		return book;
+	}
+	public int getTransactionId() {
+		return transactionId;
+	}
+	public String getTransactionType() {
+		return transactionType;
+	}
+	public static int getNoOfBooks() {
+		return NO_OF_BOOKS;
+	}
+	public Date getTransactionDate() {
+		return transactionDate;
+	}
+	public Date getBookTobeReturnDate() {
+		return bookTobeReturnDate;
+	}
+	public Date getBookReturnDate() {
+		return bookReturnDate;
+	}
+	public double getPenalty() {
+		return penalty;
+	}
+
+}
+
+
+(f).TransactionDAO.java 
+
+package library;
+
+import java.util.ArrayList;
+
+public class TransactionDAO {
+	ArrayList<Transaction> transactionList =  new ArrayList<Transaction>();
+	
+	public void addTransaction(Transaction obj){
+	    transactionList.add(obj);
+	}
+	
+	public void removeTransaction(Transaction obj)
+	{
+	    transactionList.remove(obj);	
+	}
+	
+	public void viewTransaction(){
+		if(transactionList.isEmpty()){
+		    System.out.println("Transaction List is empty");
+		}
+			
+		for (int i = 0; i < transactionList.size(); i++) {
+			System.out.println("Transaction Id:" + transactionList.get(i).getTransactionId());
+			System.out.println("Member Id:"+transactionList.get(i).getMember().getMemberId());
+			System.out.println("Book Id:"+transactionList.get(i).getBook().getBookId());
+			System.out.println("Transaction Date:" + transactionList.get(i).getTransactionDate());
+			System.out.println("Transaction Type:"+transactionList.get(i).getTransactionType());
+			System.out.println("No Of Books:"+transactionList.get(i).getNoOfBooks());
+			System.out.println("Book Return Date:"+transactionList.get(i).getBookReturnDate());
+		}
+		
+	}
+	
+
+}

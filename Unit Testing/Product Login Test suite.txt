@@ -1,0 +1,261 @@
+(a).Login.java
+
+public class Login {
+	private String userName;
+	private String Password;
+	
+	public Login(String userName, String password) {
+		super();
+		this.userName = userName;
+		this.Password = password;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public String getPassword() {
+		return Password;
+	}
+	public void setPassword(String password) {
+		this.Password = password;
+	}
+
+
+}
+
+(b).LoginDAO.java 
+
+import java.util.ArrayList;
+
+public class LoginDAO {
+	ArrayList<Login> loginlist = new ArrayList<Login>(); 
+	
+	public boolean addLogin(Login obj) {
+	    boolean flag = false;
+	    if (obj != null)
+	        flag = loginlist.add(obj);    
+	    
+	    return flag;
+	}
+	
+	public boolean deleteLogin(Login obj) {
+	    boolean flag = false;
+	    if(obj != null)
+		    flag = loginlist.remove(obj);
+	    
+	    return flag;
+	}
+
+}
+
+(c).LoginTest.java 
+
+import org.junit.Test;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
+
+public class LoginTest {
+    	    	 
+    //Write the code for adding and deleting Login data
+    
+    LoginDAO logindao = new LoginDAO();
+    Login login = new Login("L", "Lawliet");
+    
+    // Adding login data
+    @Test 
+    public void testLoginDAO_addLogin_NullObject() {
+        assertFalse(logindao.addLogin(null));
+    }
+    
+    @Test 
+    public void testLoginDAO_addLogin_NotNullObject() {
+        assertTrue(logindao.addLogin(login));
+    }
+    
+    // Deleting login data
+    @Test 
+    public void testLoginDAO_deleteLogin_NullObject() {
+        assertFalse(logindao.deleteLogin(null));
+    }
+    
+    @Test 
+    public void testLoginDAO_deleteExistingLogin_NotNullObject() {
+        logindao.addLogin(login);
+        assertTrue(logindao.deleteLogin(login));
+    }
+    
+    // Deleting non existing login data
+    @Test 
+    public void testLoginDAO_deleteNonExistingLogin_NotNullObject() {
+        assertFalse(logindao.deleteLogin(login));
+    }
+    
+    // Deleting non existing login data by altering its attributes
+    @Test 
+    public void testLoginDAO_deleteNonExistingLogin_AlterUsernameAndPassword() {
+        login.setUserName("");
+        login.setPassword("");
+        assertFalse(logindao.deleteLogin(login));
+    } 
+    
+}
+
+
+(d).Product.java 
+
+public class Product {
+	private String productId;
+	private String productName;
+	private double price;
+	
+	public Product() {
+	    super();
+	    this.productId = "";
+	    this.productName = "";
+	    this.price = 0.0;
+	}
+	public String getProductId() {
+		return productId;
+	}
+	public void setProductId(String productId) {
+		this.productId = productId;
+	}
+	public String getProductName() {
+		return productName;
+	}
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+	public double getPrice() {
+		return price;
+	}
+	public void setPrice(double price) {
+		this.price = price;
+	}
+	public Product(String productId, String productName, double price) {
+		super();
+		this.productId = productId;
+		this.productName = productName;
+		this.price = price;
+	}
+	
+
+}
+
+(e).ProductDAO.java
+
+import java.util.ArrayList;
+
+public class ProductDAO {
+	ArrayList<Product> productlist = new ArrayList<Product>(); 
+	
+	public boolean addProduct(Product obj) {
+	    boolean flag = false;
+	    if(obj != null)
+	         flag = productlist.add(obj);
+	         
+	    return flag;
+	}
+	
+	public boolean deleteProduct(Product obj) {
+	    boolean flag = false;
+	    if(obj != null)
+		    flag = productlist.remove(obj);
+	
+	    return flag;
+	}
+}
+
+(f).ProductTest.java 
+
+import org.junit.Test;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
+
+public class ProductTest {
+    
+    //Write the code for test methods
+    
+    ProductDAO productdao = new ProductDAO();
+    Product product = new Product("1234", "PredatorLaptop", 70000.95);
+    
+    // Adding the product
+    @Test 
+    public void testProductDAO_addProduct_NullObject() {
+        assertFalse(productdao.addProduct(null));
+    }
+    
+    @Test 
+    public void testProductDAO_addProduct_NotNullObject() {
+        assertTrue(productdao.addProduct(product));
+    }
+    
+    // Deleting the product
+    @Test 
+    public void testProductDAO_deleteProduct_NullObject() {
+        assertFalse(productdao.deleteProduct(null));
+    }
+    
+    @Test 
+    public void testProductDAO_deleteExistingProduct_NotNullObject() {
+        productdao.addProduct(product);
+        assertTrue(productdao.deleteProduct(product));
+    }
+    
+    // Deleting Non existing product
+    @Test 
+    public void testProductDAO_deleteNonExistingProduct_NotNullObject() {
+        assertFalse(productdao.deleteProduct(product));
+    }
+    
+    @Test 
+    public void testProductDAO_deleteNonExistingProduct_ProductNonParameterisedConstructor() {
+        assertFalse(productdao.deleteProduct(new Product()));
+    }
+    
+    // Deleting Non existing product by altering its attributes
+    @Test 
+    public void testProductDAO_deleteNonExistingProduct_AlteringProductIdAndName() {
+        product.setProductId("");
+        product.setProductName("");
+        assertFalse(productdao.deleteProduct(product));
+    }
+    
+}
+
+(g).TestSuiteRunner.java 
+
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
+
+//write code here
+
+@RunWith(Suite.class)
+@SuiteClasses({LoginTest.class, ProductTest.class})
+public class TestSuiteRunner {
+
+}
+
+(h).UserInterface.java 
+
+import org.junit.runner.JUnitCore;
+import org.junit.runner.Result;
+import org.junit.runner.notification.Failure;
+
+public class UserInterface {
+    public static void main(String args[]) {
+        Result result = JUnitCore.runClasses(TestSuiteRunner.class);
+        
+        if(result.getFailureCount() == 0)
+            System.out.println("There are No Failures...\n Test Passed...");
+        else {
+            for(Failure failure: result.getFailures()) {
+                System.out.println("The Test execution failed...\n" + failure.getMessage());
+            }
+        }
+        System.out.println("Result" + result.wasSuccessful());
+    }
+}
