@@ -1,0 +1,22 @@
+n=int(input("Enter the no. of subjects: "))
+l=[]
+f=0
+p=0
+if n>0:
+    print("Enter the marks:")
+    for i in range(n):
+        i=int(input())
+        if i>=0 and i<=100:
+            l.append(i)
+        else:
+            print("Invalid mark")
+            exit()
+    for i in l:
+        if i<=50:
+            f=f+1
+        else:
+            p=p+1
+    print("No. of subjects passed:",p)
+    print("No. of subjects failed:",f)
+else:
+    print("Invalid no. of subjects")

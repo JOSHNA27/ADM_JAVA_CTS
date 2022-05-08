@@ -1,0 +1,14 @@
+x=int(input("Dead Count:"+"\n"))
+if x>=0:
+    y=int(input("Injured Count:"+"\n"))
+    if y>=0:
+        z=int(input("Safe Count:"+"\n"))
+        if z>=0:
+            print("TSUNAMI REPORT OF JAPAN"+"\n"+"The number of people"+"\n"+"Dead:"+str(x)+"\n"+"Injured:"+str(y)+"\n"+
+"Safe:"+str(z)+"\n"+"Please help the people who are suffering!!!")
+        else:
+            print("Invalid input")
+    else:
+        print("Invalid input")
+else:
+    print("Invalid input")

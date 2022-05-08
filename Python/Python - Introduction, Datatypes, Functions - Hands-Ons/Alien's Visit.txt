@@ -1,0 +1,1 @@
+print("Hello "+input("Enter the name:")+"! Welcome to our planet Earth.")

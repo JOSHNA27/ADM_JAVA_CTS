@@ -1,0 +1,35 @@
+age=int(input("Enter the age:\n"))
+tax=0
+if age>18 and age<=100:
+    income=int(input("Enter the income:\n"))
+    if income>0:
+        if age<=60:
+            if income<=250000:
+                tax=(income*0)/100
+            elif income>250000 and income<=500000:
+                tax=(income*10)/100
+            elif income>500000 and income<=1000000:
+                tax=(income*20)/100
+            elif income>1000000:
+                tax=(income*30)/100
+        elif age>60 and age<=80: 
+            if income<=300000:
+                tax=(income*0)/100
+            elif income>300000 and income<=500000:
+                tax=(income*10)/100
+            elif income>500000 and income<=1000000:
+                tax=(income*20)/100
+            elif income>1000000:
+                tax=(income*30)/100
+        elif age>80 :
+            if income<=500000:
+                tax=(income*0)/100
+            elif income >500000 and income<=1000000:
+                tax=(income*20)/100
+            elif income>1000000:
+                tax=(income*30)/100
+        print("The Tax amount is: %.2f" % tax)
+    else:
+        print("Invalid Income")
+else:
+    print("Invalid Age")
